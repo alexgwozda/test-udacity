@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>javascript game - dungeon</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="game-container">
+
+<!----------------------------------------------------------------->
+<!-- STATUS BAR e.g. http://en.wikipedia.org/wiki/HUD_(video_gaming) -->
+<div id="status-bar">
+
+	<!-- BEGIN title -->
+	<div id="title">
+		<h1>Javascript Hero RPG</h1>
+	
+	</div> <!-- END title -->
+
+	<!-- BEGIN below title status bar-->
+	<div id="below-title">
+	
+		<!--BEGIN Hero icon -->
+		<div class="status-info">
+			<img src="images/S_Buff01.png" id="hero-icon"><div class="hidden" id="hero-icon-info"><p>Hero name: "<span id="hero-name"><em>undefined! see Record Keeper</em></span>"
+			<br>Hero class: "<span id="hero-class"><em>undefined! see Record Keeper</em></span>"
+			<br>Current chamber: "<span id="current-chamber-info"></span>"
+			</div>
+		</div>  <!--END Hero icon -->
+
+		<!--BEGIN Items: Mode, other Items, Weapons -->
+		<div id="items">
+			<img src="images/I_Book.png" id="item1"><div id="item1-info"><p></p></div>
+			<img src="images/S_Bow04.png" id="item2"><div id="item2-info"><p></p></div>
+			<img src="images/C_Elm03.png" id="item3"><div id="item3-info"><p></p></div>
+			<img src="images/A_Armor04.png" id="item4"><div id="item4-info"><p></p></div>
+			<img src="images/E_Wood03.png" id="item5" class="dummy-class1 dummyclass2 "><div id="item5-info"><p></p></div>
+		</div> <!--END Items -->
+		
+		<!--BEGIN Points -->
+		<div id="points">
+				<p>Points:<br>
+					<span id="points-total">0</span>
+				</p>
+		</div> <!--END Points -->
+		
+		<!-- BEGIN Hearts-->
+		<div id="hearts">
+			<img id="heart1" src="images/S_Holy01.png"><div id="heart-alert" class="hidden"><p>You lost a heart!</p></div>
+			<img id="heart2" src="images/S_Holy01.png">
+			<img id="heart3" src="images/S_Holy01.png">
+			<img id="heart4" src="images/S_Holy01.png" class="hidden"> <!-- unhide for warrior -->
+		</div> 
+		<!-- END Hearts -->
+
+	</div><!-- END below title status bar --> 
+</div> <!--END Status Bar -->
+
+<!----------------------------------------------------------------->
+<!--BEGIN Dungeon -->
+
+<div id="dungeon">
+<!-- Dungeon 
+... Establish width. 
+... Everything inside is absolute placement by pixels.
+... Display: none, on entire chambers.  class hidden
+... 
+
+-->
+
+<!----------------------------------------------------------------->
+	<!-- BEGIN Intro screen -->
+	<div id="intro" class="hidden"><p id="intro1">Deep within the core of this dungeon lies tremendous power.  <br><br>This power threatens the land of Patav Scirj. <br><br>Endlessly, it creates horrors that rise to the surface.  <br><Br>Monsters emerge from ever-increasing passageways from the depths... <a href="#">[CONTINUE]</a></p><p id="intro2" class="hidden">This onslaught of centuries has worn down the people's will to live and to dream.  <br><br>Everything they have built - or their very lives - may be destroyed overnight.  [CONTINUE]</p><p id="intro3" class="hidden">The old prophets' books say the dungeon's power can be tamed by the will of any being who reaches it and conquers it.  <br><br>All who have ventured to seek it have failed. And yet, it sends whispers into the minds of those who may find it.  It beckons to these chosen souls.</p><p id="intro4" class="hidden">It wishes to gain new life, joined with a consciousness worthy of its power...  <br><br>You are a chosen one. </p><p id="intro5" class="hidden">For your whole life, the power's shadow in your mind has been calling you forth...  <br><br>You are ready now. </p><!-- ENDING Intro screen --></div>
+	
+	<div id="mouth" class="">
+	<!--BEGINNING Mouth of the Dungeon -->
+
+	<div id="hero"><div class="info"><img src="images/S_Buff01.png">
+		<span><strong>This is you</strong>, brave hero of Patav Scirj, <strong>seeking The Power</strong> that threatens your world and beckons your name!</span>
+	</div>
+	</div> 
+	
+	<div id="record-keeper"><div class="info"><img src="images/S_Buff02.png" class="focus-image">
+		<span><strong>The Record Keeper</strong>
+		<br>Welcome adventurer!  Register your <strong>name</strong> and <strong>background class</strong> in my log of doomed sou--<em> I mean</em> great heroes.</span>
+	</div>
+	<div class="challenge hidden" id="record-keeper-challenge">
+		<p>Our great Godhead, the Browser, wishes to hear your heroic name.  Announce yourself!  Alert your name to the Browser! I will record this in the Journal of Heroes. Then, please inform me of your class -- are you a Warrior, a Mage, a Prophet, or something else? What is your heroClass variable? </p>
+		<p class="hint">// Use a basic alert() function</p>
+		<p class="instructions">/* Type alert("Your Name") and end it as you do for all statements, with a semicolon; */</p>
+		<form name="record-keeper-form-1">
+			<p>Alert your heroic name:<p>
+			<input type="text" name="record-keeper-input-1">=
+			<!-- see http://www.javaworld.com/article/2077176/scripting-jvm-languages/using-javascript-and-forms.html -->
+			<p>Declare your heroClass as one of the following: 
+			<br>"Avatar": In Avatar mode your godly armor makes you unstoppable. Any challenge that comes your way is defeated at your first move, and  divine insight provides any knowledge you may need. Union with The Power is inevitable.
+			<br>"Ghost": In Ghost mode, your mortal appearance is only a manifestation of unfulfilled destiny.  At any point you may dematerialize and float unnoticed to the following chamber, bypassing any forces unworthy of your transcendent calling.
+			<br>"Mage": After decades of channelling the arcane arts, your Mage's staff is powerful.  You may defeat two enemies in each chamber at will.
+			<br>"Acolyte": Your study of arcane capacities allows you deep understanding of all things through your cryptic Acolyte's tome.  Complete guidance to conquer any challenge is instantly available.
+			<br>"Adventurer": As an experienced Adventurer, your compass and intuition give you uncanny hints to conquer your obstacles. 
+			<br>"Warrior": Drink from your Warrior's flask to restore health up to two times in your journey. One heart is replenished with each drink.
+			<br>"Prophet": Gifted as a Prophet, nothing is hidden from your view.  Prophetic divination from your bless'ed book allows you to foresee the dungeon in its entirety.  While this trek is the most difficult for a vulnerable Prophet, unfathomable potential exists upon a Prophet's union with The Power...
+			</p>
+			<input type="text" name="record-keeper-input-2">
+			<input type="button" name="record-keeper-button" value="Submit">
+		</form>
+		<form>
+			<p class="answer">Click your class's unique icon above to activate your special ability.  (Avatar and Prophet divine abilities are always active.)  </p>
+			<input type="button" name="to-weaponsmith" value="Continue!">
+		</form>
+	</div>
+	</div>
+		
+	<div id="weaponsmith"><div class="info"><img src="images/S_Buff03.png">
+		<span><strong>The Weaponsmith</strong>
+		<br>Choose your second-greatest ally, your <strong>weapon</strong>. 
+		<br><em><span style="font-size: 75%">(What was the first? ...That would have been good to know.)</span></em></span>
+	</div>
+	</div>
+	
+	<div id="torch-bearer"><div class="info"><img src="images/S_Buff04.png">
+		<span><strong>The Torch Bearer</strong>
+		<br>You will need a <strong>torch</strong> to explore your future tomb!</span>
+	</div>
+	</div>
+	
+	<div id="illegal-monster" class="hidden"><div class="info"><img src="images/S_Buff05.png">
+		<span><strong>Illegal Variables Monster</strong>
+		<br>You shall not pass</span>
+	</div>
+	</div>
+	
+	</div> <!--END Mouth of the Dungeon -->
+
+	
+	<!----------------------------------------------------------------->
+	<!--BEGIN Chamber of Uncertainty -->
+	<div id="uncertainty" class="hidden">
+	
+	
+	
+
+	</div> <!--END Chamber of Uncertainty -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Echo-Filled Emptiness -->
+	<div id="emptiness" class="hidden">
+
+	</div> <!--END Echo-Filled Emptiness -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Clockwork Corridor -->
+	<div id="corridor" class="hidden">
+
+	</div> <!--END Clockwork Corridor -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Labyrinth of Treasures -->
+	<div id="labyrinth" class="hidden">
+
+	</div> <!--END Labyrinth of Treasures -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Asylum of Endless Evil -->
+	<div id="asylum" class="hidden">
+
+	</div> <!--END Asylum of Endless Evil -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Dark Lake of the Lost -->
+	<div id="lake" class="hidden">
+
+	</div> <!--END Dark Lake of the Lost -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Field of Pure Potential -->
+	<div id="field" class="hidden">
+
+	</div> <!--END Field of Pure Potential -->
+
+	<!----------------------------------------------------------------->
+	<!--BEGIN Vortex of The Power -->
+	<div id="vortex" class="hidden">
+
+	</div> <!--END Vortex of The Power -->
+
+</div> <!--END dungeon -->
+</div> <!--END game-container -->
+
+<script src="scripts.js"></script>
+
+</body>
+</html>
